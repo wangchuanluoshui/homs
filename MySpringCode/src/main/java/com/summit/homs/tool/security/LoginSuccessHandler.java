@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.summit.homs.dto.LoginSysUser;
+import com.summit.homs.dto.SysUser;
 import com.summit.homs.tool.redis.AbstractIRedisService;
 import com.summit.homs.util.IResult;
 import com.summit.homs.util.IResultUtil;
@@ -41,7 +41,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {
 		// 获取当前用户(domain接收)
 		LoginSysUser user = (LoginSysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		request.getSession().setAttribute("LOGIN_USER", user);
+		
+		SysUser sysUser=new SysUser(user.getId(), user.getLoginUserName(), user.getPassword(), user.getChineseName(), user.getEmail(), user.getPhone());
+		sysUser.setRoles(user.getRoles());
+		
+		request.getSession().setAttribute("LOGIN_USER", sysUser);
 		logger.info("登陆成功，用户："+user.getChineseName());
 		// 转发到index页面
 //		response.sendRedirect(request.getContextPath() + "/hello");
@@ -49,7 +53,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		response.setContentType("application/json;charset=utf-8");
 		//返回JSON字符串
 		PrintWriter writer =response.getWriter();
-		writer.write(JSONObject.toJSONString(IResultUtil.success()));
+		writer.write(JSONObject.toJSONString(IResultUtil.success(null)));
 		
 	}
 

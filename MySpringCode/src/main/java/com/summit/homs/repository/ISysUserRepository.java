@@ -21,8 +21,8 @@ import java.util.List;
 * 
 * 用户DAO
  */
-public interface ISysUserRepository extends JpaRepository<SysUser, Long> {
+public interface ISysUserRepository extends JpaRepository<SysUser, String> {
 	SysUser findByLoginUserName(String loginName);
     List<SysUser> findByChineseName(String chineseName);
-    List<SysUser> findByLoginUserNameOrChineseNameOrPhone(String LoginUserName,String ChineseName,String Phone);
+    List<SysUser> findByLoginUserNameOrChineseNameOrPhone(String loginUserName,String chineseName,String phone);
 }

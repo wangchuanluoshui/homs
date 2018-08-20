@@ -22,10 +22,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws org.springframework.security.core.AuthenticationException {
 
+		UsernamePasswordAuthenticationToken authRequest=null;
 		if (request.getContentType().equals(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				|| request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE)) {
 			//use jackson to deserialize json
-			UsernamePasswordAuthenticationToken authRequest = null;
 			try (InputStream is = request.getInputStream()) {
 				JSONObject userJson =readJson(request);
                 authRequest = new UsernamePasswordAuthenticationToken(
@@ -35,12 +35,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 				authRequest = new UsernamePasswordAuthenticationToken("", "");
 			} finally {
 				setDetails(request, authRequest);
-				return this.getAuthenticationManager().authenticate(authRequest);
 			}
 
 		}
-
-		return super.attemptAuthentication(request, response);
+		return this.getAuthenticationManager().authenticate(authRequest);
 	}
 	
 	public static JSONObject readJson(HttpServletRequest request) throws IOException

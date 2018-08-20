@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.summit.homs.service.imp.UserDetailsServiceImpl;
 import com.summit.homs.tool.security.CustomAuthenticationFilter;
-import com.summit.homs.tool.security.CustomUserService;
 import com.summit.homs.tool.security.LoginFailHandler;
 import com.summit.homs.tool.security.LoginSuccessHandler;
 import com.summit.homs.util.PasswordEncode;
@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	UserDetailsService customUserService() {
-		return new CustomUserService();
+		return new UserDetailsServiceImpl();
 	}
 
 	@Override

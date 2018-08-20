@@ -57,7 +57,6 @@ public class LoginSysUser  implements UserDetails,Serializable {
 	private List<SysRole> roles;
 	
 	
-	
     public String getId() {
 		return id;
 	}

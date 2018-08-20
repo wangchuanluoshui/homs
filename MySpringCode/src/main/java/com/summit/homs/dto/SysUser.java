@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+@Entity(name = "user_sys_user")
 @Table(name = "user_sys_user")
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -38,7 +39,23 @@ public class SysUser implements Serializable {
 	// 电话
 	private String phone;
 
-	@ManyToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	
+	
+	public SysUser(String id, String loginUserName, String password, String chineseName, String email, String phone) {
+		super();
+		this.id = id;
+		this.loginUserName = loginUserName;
+		this.password = password;
+		this.chineseName = chineseName;
+		this.email = email;
+		this.phone = phone;
+	}
+	
+	public SysUser() {
+		super();
+	}
+
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private List<SysRole> roles;
 
 	public String getId() {

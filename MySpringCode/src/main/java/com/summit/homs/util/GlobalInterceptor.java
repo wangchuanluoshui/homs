@@ -27,7 +27,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String sessionId = request.getSession().getId();
-		if (logger.isInfoEnabled()) {
+		if (logger.isDebugEnabled()) {
 			logger.info("SESSIONID:"+sessionId);
 			logger.info(request.getContextPath());
 			logger.info(request.getRequestURL().toString());
